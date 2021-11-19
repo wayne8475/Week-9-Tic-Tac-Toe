@@ -150,7 +150,7 @@ class Game extends React.Component {
         <div className="game-info">
           <div>{status}</div>
           <ol>{this.state.isAscend ? moves : moves.reverse()}</ol>
-          <ol>目前排序方式: {this.state.isAscend ? "Ascending" : "Descneding"}</ol>
+          <ol>目前排序方式: {this.state.isAscend ? "Ascending" : "Descending"}</ol>
           <ol><button onClick={() => this.reverseorder()}>
             變更排序方式
           </button></ol>
