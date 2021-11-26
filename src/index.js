@@ -33,15 +33,23 @@ class Board extends React.Component {
     } 
   }
 
+  col(i){
+    var rendercols = [];
+    for(var col = 0; col < 3; col++){
+      rendercols.push(this.renderSquare(i));
+      i++;
+    }
+    return(
+      rendercols
+    );
+  }
   render() {
+    //3. 改寫 Board，使用兩個 loop 建立方格而不是寫死它。
     var rendersquares = [];
     var squarenum = 0;
     for (var row = 0; row < 3; row++){
-      rendersquares.push(<div className="board-row"></div>);
-      for (var col = 0; col < 3; col++){
-        rendersquares.push(this.renderSquare(squarenum));
-        squarenum++
-      }
+      rendersquares.push(<div className="board-row">{this.col(squarenum)}</div>);
+      squarenum += 3;
     }
     return (
       <div>{rendersquares}</div>
@@ -68,6 +76,7 @@ class Game extends React.Component {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
+    //將座標存成陣列儲存
     const locations = [
       [1, 1],
       [2, 1],
@@ -115,8 +124,10 @@ class Game extends React.Component {
 
     const moves = history.map((step, move) => {
       const desc = move ?
+        //1. 在歷史動作列表中，用（欄，列）的格式來顯示每個動作的位置。
         'Go to move #' + move + ' at [' + history[move].locations+']' :
         'Go to game start';
+        //2. 在動作列表中，將目前被選取的項目加粗。
       return (
         <li key={move}>
           <button onClick={() => this.jumpTo(move)}>
